@@ -6,6 +6,7 @@ library(geosphere)
 climate <- read.csv("Ha_climat-daily.csv")
 calling <- read.csv("Ha_act-hourly.csv", header=TRUE, sep=',')
 coord <- read.csv("Ha_site_coordinates.csv", header=TRUE, sep=',')
+coord$pop <- as.factor(coord$pop)
 
 #check data
 head(calling)

@@ -10,6 +10,7 @@ source('/Users/cdesjonq/Documents/stats_glmm/functions/boot_glmm.r')
 contr <- glmerControl(optimizer="bobyqa", optCtrl=list(maxfun=10000000))
 
 data <- xdata
+data$pop <- as.factor(data$pop)
 climate <- read.csv("Ha_climat-daily.csv", header=TRUE)
 climate$year <- substr(climate$date, start=7, stop=10)
 climate$month <- substr(climate$date, start=4, stop=5)
