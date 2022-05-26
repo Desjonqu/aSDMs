@@ -9,9 +9,16 @@ Camille Desjonquères, Sara Villén-Pérez, Paulo De Marco, Rafael Márquez, Jua
 
 Please contact [Camille Desjonquères](cdesjonqu@gmail.com) and [Diego Llusia](diego.llusia@uam.es) for any queries.
 
+**Data requirement**
+- Local calling behaviour (daily or hourly)
+- Local weather (daily)
+- Species distribution range (as a polygon or UTM)
+- Present and future climate over the species distribution range
+
 **Overall structure**
 
 The root contains three files (the readme and two spatial data files for the Iberic Peninsula) and two folders (Ha and functions).
+The code is assuming that the working directory is '/Ha/data'
 
 ## Functions folder
 
@@ -20,7 +27,7 @@ The functions folder contains two R files with code to format the hourly and dai
 
 ## Ha folder
 
-The Ha folder contains the core of the aSDMs code divided in 6 folders that we describe below.
+The Ha folder contains the core of the aSDMs code divided in 6 folders (1 for data and 5 for scripts) that we describe below.
 
 ### Data
 
@@ -49,7 +56,7 @@ Folder that contains all the datasets required to run the code:
 
 ### 3_temporal-validation
 
-2 R codes to validate the models:
+2 R codes to apply a cross-validation on both models and assess the results of these validations:
 - 211206_valtemp-assessment.R 
 - 220203_validationtemporelle.R 
 
