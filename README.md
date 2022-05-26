@@ -22,7 +22,7 @@ The code is assuming that the working directory is '/Ha/data'
 
 ## Functions folder
 
-The functions folder contains two R files with code to format the hourly and daily data to monthly data.
+The functions folder contains 4 R files. 2 to format the hourly and daily data to monthly data. One to assess assumptions of a GLMM and one to calculate the confidence intervals of a GLMM.
 
 
 ## Ha folder
