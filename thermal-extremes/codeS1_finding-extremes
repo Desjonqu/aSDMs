@@ -1,0 +1,77 @@
+---
+title: "Acoustic Species Distribution Models (aSDMs): a framework to forecast shifts in calling behaviour under climate change"
+author: "Camille Desjonquères, Sara Villén-Pérez, Paulo De Marco, Rafael Márquez, Juan F. Beltran, Diego Llusia"
+date: "07/01/2022"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = FALSE, 
+  warning = FALSE, 
+  message=FALSE, 
+  dpi=300, 
+  cache = TRUE)
+```
+
+This supplementary material present R code allowing to find sites that are at the climatic extremes of a species distribution.
+
+# Loading packages
+
+```{r, echo=TRUE, eval=TRUE}
+library(rgdal)
+library(raster)
+library(maps)
+library (sp)
+library(rgeos)
+library(ggplot2)
+```
+
+# Dowloading IUCN species distribution
+
+First you need to obtain the distribution data of the species of interest. For this example, we downloaded the [IUCN](https://www.iucnredlist.org/species/55268/87541047) distribution for *Alytes obstetricans*. They are included here.
+
+You then need to load the data ('Ao' is the name of the folder containing the distribution data):
+
+```{r, echo=TRUE, eval=TRUE, message=FALSE}
+Ao <- readOGR(dsn="Ao", layer='data_0')
+```
+
+# Loading and formating climate data
+
+You will then need climate data for which you want to identify the extreme values. In this example we are focussing on temperature. We are using [worldclim data](https://www.worldclim.org/) "bio" for yearly data (see https://www.worldclim.org/data/bioclim.html for details on each of the available variable) or "tmean", "tmin", "tmax", "prec" for monthly data.
+
+```{r, echo=TRUE, eval=TRUE}
+world_clim <- getData('worldclim', var='bio', res=10)/10
+```
+
+After loading the data, we can then crop the spatial data to fit the distribution of the species of interest (here *A. obstetricans*).
+
+```{r, echo=TRUE, eval=FALSE}
+Aolimits <- extent(Ao) 
+spat_tmin <- crop(world_clim$bio1, Aolimits)
+spat_tmin <- mask(spat_tmin, mask=Ao)
+```
+
+# Identify extreme climate values
+
+Finally we identify the zones corresponding to the 5% lowest and highest temperatures using quantiles.
+
+```{r, echo=TRUE, eval=TRUE}
+extremes <- quantile(spat_tmin, probs=c(0.05, 0.95))
+tmin <- as.data.frame(spat_tmin<extremes[1], xy=TRUE)
+tmin[tmin==0] <- NA
+tmax <- as.data.frame(spat_tmin>extremes[2], xy=TRUE)
+tmax[tmax==0] <- NA
+datos <- as.data.frame(spat_tmin, xy = TRUE)
+```
+
+Finally we can represent the zones with extreme values and take into account other factors to identify adequate sites for the study. The coldest zones are shown in blue and warmest in red.
+
+```{r, echo=TRUE, eval=TRUE}
+ggplot() + geom_raster(data = datos, aes(x=x, y=y, fill = scales::colour_ramp(c("grey", "grey"))(bio1))) + coord_quickmap(xlim = Aolimits[1:2], ylim = Aolimits[3:4]) + borders("world", size=0.2, colour = "lightgray") + theme(legend.position = "none",axis.title = element_blank(),axis.text = element_text(size=7), strip.background = element_rect(fill="white"), strip.text = element_text(face="italic", size=12))+ annotate(geom = 'raster', x = tmin$x, y = tmin$y, fill = scales::colour_ramp(c("blue", "blue"))(tmin$layer))+ annotate(geom = 'raster', x = tmax$x, y = tmax$y, fill = scales::colour_ramp(c("red", "red"))(tmax$layer))
+```
