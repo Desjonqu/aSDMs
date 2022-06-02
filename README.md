@@ -17,8 +17,12 @@ Please contact [Camille Desjonquères](cdesjonqu@gmail.com) and [Diego Llusia](d
 
 **Overall structure**
 
-The root contains three files (the readme and two spatial data files for the Iberic Peninsula) and two folders (Ha and functions).
+The root contains three files (the readme and two spatial data files for the Iberic Peninsula) and three folders (Ha, functions, and thermal-extremes).
 The code is assuming that the working directory is '/Ha/data'
+
+## Thermal-extreme folder
+
+The Thermal-extreme folder contains one Rmd file containing R code to find sites that are at the climatic extremes of a species distribution.
 
 ## Functions folder
 
