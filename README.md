@@ -5,7 +5,7 @@
 This repository contains the R code and data associated with the manuscript titled 'Acoustic Species Distribution Models (aSDMs): a framework to forecast shifts in calling behaviour under climate change' in revision in *Methods in Ecology and Evolution*.
 
 The authors are:
-Camille Desjonquères, Sara Villén-Pérez, Paulo De Marco, Rafael Márquez, Juan F. Beltran, & Diego Llusia
+Camille Desjonquères, Sara Villén-Pérez, Paulo De Marco, Rafael Márquez, Juan F. Beltrán, & Diego Llusia
 
 Please contact [Camille Desjonquères](cdesjonqu@gmail.com) and [Diego Llusia](diego.llusia@uam.es) for any queries.
 
